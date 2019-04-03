@@ -3,15 +3,15 @@
 ### Introduction
 
 Starting with 1.3.30 an experimental integration with [CocoaPods](https://cocoapods.org/) is added
-in Kotlin/Native. This feature allows one to represent a Kotlin/Native Gradle-project as a
+to Kotlin/Native. This feature allows one to represent a Kotlin/Native Gradle-project as a
 CocoaPods dependency. Such a representation provides the following advantages:
 
  - Such a dependency can be included in a Podfile of an Xcode project and be automatically (re)built
  along with this project. As a result, importing to Xcode is simplified since there is no need to
  write corresponding Gradle tasks and Xcode build steps manually.
  
- - When building from Xcode, it becomes possible to use CocoaPods libraries without manual writing
- def-files and setting cinterop tool parameters. In this case all required parameters can be
+ - When building from Xcode, it is possible to use CocoaPods libraries without manual writing
+ .def files and setting cinterop tool parameters. In this case all required parameters can be
  obtained from the Xcode project configured by CocoaPods.
  
 ### CocoaPods Gradle plugin
@@ -22,7 +22,7 @@ The CocoaPods support in implemented in a separate Gradle plugin: `org.jetbrains
 `org.jetbrains.kotlin.multiplatform` plugin. See details about the multiplatform plugin at
 the [corresponding page](https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html).
 
-When applied the CocoaPods plugin preforms the following actions:
+When applied the CocoaPods plugin performs the following actions:
 
 1. Add both debug and release frameworks as output binaries for all iOS and macOS targets.
 2. Create a `podspec` task which generates a [podspec](https://guides.cocoapods.org/syntax/podspec.html)
@@ -39,8 +39,8 @@ configured using the `kotlin.cocoapods { ... }` code block.
 ```kotlin
 // Apply plugins.
 plugins {
-    id("org.jetbrains.kotlin.multiplatform")
-    id("org.jetbrains.kotlin.native.cocoapods")
+    id("org.jetbrains.kotlin.multiplatform") version "1.3.30"
+    id("org.jetbrains.kotlin.native.cocoapods") version "1.3.30"
 }
 
 // CocoaPods requires the podspec to have a version.
@@ -66,7 +66,7 @@ kotlin {
 > A version of the Gradle project is used as a value for the `version` field.
 Fields`summary` and `homepage` can be configured using the `cocoapods` code block.
 
-This podspec file can be referenced from a [Podilfe](https://guides.cocoapods.org/using/the-podfile.html)
+This podspec file can be referenced from a [Podfile](https://guides.cocoapods.org/using/the-podfile.html)
 of an Xcode project. After that the framework built from the Kotlin/Native module can be used from
 this Xcode project. If necessary, this framework is automatically rebuilt during Xcode build process.
 
@@ -144,5 +144,6 @@ some CocoaPods libraries, it can be build __only__ __from__ __Xcode__.
 
 ### Current Limitations
 
- - If a Kotlin/Native uses some CocoaPods library, its build must be executed from an Xcode project.
+ - If a Kotlin/Native module uses some CocoaPods library, its build must be executed from an Xcode project.
+ Otherwise the CocoaPods library cannot be resolved by the Kotlin/Native infrastructure.
  - [Subspecs](https://guides.cocoapods.org/syntax/podspec.html#group_subspecs) are not supported.
