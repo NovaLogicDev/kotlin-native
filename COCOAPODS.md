@@ -13,10 +13,13 @@ CocoaPods dependency. Such a representation provides the following advantages:
  - When building from Xcode, it is possible to use CocoaPods libraries without manual writing
  .def files and setting cinterop tool parameters. In this case all required parameters can be
  obtained from the Xcode project configured by CocoaPods.
- 
+
+For an example of using this feature, refer to the
+[`cocoapods`](https://github.com/JetBrains/kotlin-native/tree/master/samples/cocoapods) sample.
+
 ### CocoaPods Gradle plugin
 
-The CocoaPods support in implemented in a separate Gradle plugin: `org.jetbrains.kotlin.native.cocoapods`.
+The CocoaPods support is implemented in a separate Gradle plugin: `org.jetbrains.kotlin.native.cocoapods`.
 
 > __Note:__ The plugin is based on the multiplatform project model and requires applying the
 `org.jetbrains.kotlin.multiplatform` plugin. See details about the multiplatform plugin at
@@ -31,8 +34,6 @@ file for the given project.
 The podspec generated includes a path to an output framework and script phases which automate building
 this framework during a build process of an Xcode project. Some fields of the podspec file can be
 configured using the `kotlin.cocoapods { ... }` code block.
-
-#####TODO: Sample link (https://github.com/JetBrains/kotlin-native/pull/2827).
 
 <div class="sample" markdown="1" theme="idea" mode="kotlin">
 
@@ -119,7 +120,7 @@ kotlin {
     cocoapods {
         // Configure a dependency on AFNetworking.
         // The CocoaPods version notation is supported.
-        // The dependency will be added in all macOS and iOS targets.
+        // The dependency will be added to all macOS and iOS targets.
         pod("AFNetworking", "~> 3.2.0")
     }
 }
