@@ -1,20 +1,20 @@
-## CocoaPods integration
+# CocoaPods integration
 
 ### Introduction
 
-Starting with 1.3.30 an experimental integration with [CocoaPods](https://cocoapods.org/) is added
-to Kotlin/Native. This feature allows one to represent a Kotlin/Native Gradle-project as a
+Starting with 1.3.30, an experimental integration with [CocoaPods](https://cocoapods.org/) is added
+to Kotlin/Native. This feature allows you to represent a Kotlin/Native Gradle-project as a
 CocoaPods dependency. Such a representation provides the following advantages:
 
- - Such a dependency can be included in a Podfile of an Xcode project and be automatically (re)built
+ - Such a dependency can be included in a Podfile of an Xcode project and automatically built (and rebuilt)
  along with this project. As a result, importing to Xcode is simplified since there is no need to
  write corresponding Gradle tasks and Xcode build steps manually.
  
- - When building from Xcode, it is possible to use CocoaPods libraries without manual writing
- .def files and setting cinterop tool parameters. In this case all required parameters can be
+ - When building from Xcode, you can use CocoaPods libraries without writing
+ .def files manually and setting cinterop tool parameters. In this case, all required parameters can be
  obtained from the Xcode project configured by CocoaPods.
 
-For an example of using this feature, refer to the
+For an example of CocoaPods integration, refer to the
 [`cocoapods`](https://github.com/JetBrains/kotlin-native/tree/master/samples/cocoapods) sample.
 
 ### CocoaPods Gradle plugin
@@ -25,10 +25,10 @@ The CocoaPods support is implemented in a separate Gradle plugin: `org.jetbrains
 `org.jetbrains.kotlin.multiplatform` plugin. See details about the multiplatform plugin at
 the [corresponding page](https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html).
 
-When applied the CocoaPods plugin performs the following actions:
+When applied, the CocoaPods plugin does the following:
 
-1. Add both debug and release frameworks as output binaries for all iOS and macOS targets.
-2. Create a `podspec` task which generates a [podspec](https://guides.cocoapods.org/syntax/podspec.html)
+1. Adds both `debug` and `release` frameworks as output binaries for all iOS and macOS targets.
+2. Creates a `podspec` task which generates a [podspec](https://guides.cocoapods.org/syntax/podspec.html)
 file for the given project.
 
 The podspec generated includes a path to an output framework and script phases which automate building
@@ -73,20 +73,20 @@ this Xcode project. If necessary, this framework is automatically rebuilt during
 
 ### Workflow
 
-The following steps allows one to import a Kotlin/Native module in an existing Xcode project.
+To import a Kotlin/Native module in an existing Xcode project:
 
 0. [Install](https://guides.cocoapods.org/using/getting-started.html#installation) CocoaPods.
-It's recommended to use CocoaPods 1.6.1 or higher.
+We recommend using CocoaPods 1.6.1 or later.
 
 1. Configure a Gradle project: apply the `org.jetbrains.kotlin.native.cocoapods` plugin, add
-and configure the targets needed and specify the required podspec fields.
+and configure the targets, and specify the required podspec fields.
 
 2. Run the `podspec` task. The podspec file described above will be generated.
 
     > In order to avoid compatibility issues during an Xcode build, the plugin requires using
-    a [Gradle wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html). It's
-    possible to generate the wrapper automatically during execution of the `podspec` task
-    by running it with an additional parameter `-Pkotlin.native.cocoapods.generate.wrapper=true`.
+    a [Gradle wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html). 
+To generate the wrapper automatically during execution of the `podspec` task,
+    run it with the parameter `-Pkotlin.native.cocoapods.generate.wrapper=true`.
 
 3. Add a reference to the generated podspec in a Podfile of the Xcode project.
 
@@ -102,15 +102,15 @@ and configure the targets needed and specify the required podspec fields.
 
 4. Run `pod install` for the Xcode project.
     
-After these steps the Kotlin/Native module is included in the Xcode project. Now it's possible
-to open the generated workspace (see [CocoaPods documentation](https://guides.cocoapods.org/using/using-cocoapods.html#installation))
+After completing these steps, you can
+open the generated workspace (see [CocoaPods documentation](https://guides.cocoapods.org/using/using-cocoapods.html#installation))
 and run an Xcode build.
 
 ### Interoperability
 
 The CocoaPods plugin also allows using CocoaPods libraries without manual configuring cinterop
-parameters (see [a corresponding section](https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#cinterop-support)
-in the multiplatform plugin documentation). The `cocoapods { ... }` code block allows one to
+parameters (see the [corresponding section](https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#cinterop-support)
+of the multiplatform plugin documentation). The `cocoapods { ... }` code block allows you to
 add dependencies on CocoaPods libraries.
 
 <div class="sample" markdown="1" theme="idea" mode="kotlin">
@@ -128,8 +128,8 @@ kotlin {
 
 </div>
 
-To use these dependencies from a Kotlin code, a package `cocoapods.<library-name>` must
-be imported. E.g. in the example above a package `cocoapods.AFNetworking` is used.
+To use these dependencies from a Kotlin code, import a package `cocoapods.<library-name>`.
+In the example above, it's `cocoapods.AFNetworking`.
 
 The dependencies declared in this way are added in the podspec file and downloaded during
 the execution of `pod install`.
@@ -141,10 +141,10 @@ directive.
 
 Search paths for libraries added in the Kotlin/Native module in this way are obtained
 from properties of the Xcode projects configured by CocoaPods. Thus if the module uses
-some CocoaPods libraries, it can be build __only__ __from__ __Xcode__.
+CocoaPods libraries, it can be build __only__ __from__ __Xcode__.
 
 ### Current Limitations
 
- - If a Kotlin/Native module uses some CocoaPods library, its build must be executed from an Xcode project.
+ - If a Kotlin/Native module uses a CocoaPods library, you can built this module only from an Xcode project.
  Otherwise the CocoaPods library cannot be resolved by the Kotlin/Native infrastructure.
  - [Subspecs](https://guides.cocoapods.org/syntax/podspec.html#group_subspecs) are not supported.
